@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { toast } from 'react-toastify';
+import GlobalStyle from './styles/globals';
+import Background from './components/Background';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+import Routes from './routes';
+
+import { store, persistor } from './store';
+
+const App = () => {
+  toast.configure({ autoClose: 4000 });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Background>
+          <GlobalStyle />
+          <Routes />
+        </Background>
+      </PersistGate>
+    </Provider>
   );
-}
+};
 
 export default App;
